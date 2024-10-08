@@ -1,0 +1,20 @@
+{
+  "hostRequirements": {
+    "cpus": 8,
+    "memory": "8gb",
+    "storage": "32gb"
+  },
+  "name": "Python 3.9.9 Codespace",
+  "image": "mcr.microsoft.com/devcontainers/python:3.9",
+  "features": {
+    "python": "3.9.9"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ]
+    }
+  }
+}
