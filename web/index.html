@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .seat {
+            width: 30px;
+            height: 30px;
+            margin: 3px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+        }
+        .available {
+            background-color: green;
+        }
+        .unavailable {
+            background-color: lightgray;
+            pointer-events: none;
+        }
+        .selected {
+            background-color: #00bfff; /* 선택된 좌석 */
+        }
+        .seat::after {
+            content: "✔";
+            position: absolute;
+            color: white;
+            font-size: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .selected::after {
+            display: block;
+        }
+        .seat-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Area 1</h2>
+    <div class="seat-container">
+        <!-- 남아있는 좌석: 초록색, 클릭 가능 -->
+        <div class="seat available" id="t8600030" 
+             name="tk" value="8600030" title="3층 B4구역05열 008번" grade="R석" 
+             onclick="toggleSeat(this)">
+        </div>
+        <div class="seat available" id="t8600031" 
+             name="tk" value="8600031" title="3층 B4구역05열 009번" grade="R석" 
+             onclick="toggleSeat(this)">
+        </div>
+        <div class="seat available" id="t8600032" 
+             name="tk" value="8600032" title="3층 B4구역05열 010번" grade="R석" 
+             onclick="toggleSeat(this)">
+        </div>
+        <div class="seat available" id="t8600032" 
+        name="tk" value="8600032" title="3층 B4구역05열 011번" grade="R석" 
+        onclick="toggleSeat(this)">
+        </div>
+
+        <!-- 판매된 좌석: 회색, 클릭 불가 -->
+        <div class="seat unavailable" id="t7100030" 
+             name="tk" value="7100030">
+        </div>
+        <div class="seat unavailable" id="t7100031" 
+             name="tk" value="7100031">
+        </div>
+        <div class="seat unavailable" id="t7100031" 
+             name="tk" value="7100031">
+        </div>
+
+        <!-- 남아있는 좌석: 초록색, 클릭 가능 -->
+        <div class="seat available" id="t8600033" 
+             name="tk" value="8600033" title="3층 B4구역05열 011번" grade="R석" 
+             onclick="toggleSeat(this)">
+        </div>
+        <div class="seat unavailable" id="t7100031" 
+             name="tk" value="7100031">
+        </div>
+        <div class="seat unavailable" id="t7100031" 
+             name="tk" value="7100031">
+        </div>        
+        <div class="seat available" id="t8600034" 
+             name="tk" value="8600034" title="3층 B4구역05열 012번" grade="R석" 
+             onclick="toggleSeat(this)">
+        </div>
+    </div>
+
+    <!-- 선택한 좌석 정보 표시 -->
+    <div class="seat-info">
+        선택한 좌석: <ul id="selected-seat-info"></ul>
+    </div>
+
+    <!-- 좌석 선택 완료 버튼 -->
+    <div>
+        <button class="btn btn-primary mt-3" onclick="completeSelection()">좌석선택 완료</button>
+    </div>
+</div>
+
+<script>
+    let selectedSeatsInfo = [];
+
+    function toggleSeat(element) {
+        const seatInfo = element.getAttribute('title');
+
+        if (!element.classList.contains('unavailable')) {
+            element.classList.toggle('selected');
+
+            // 선택된 좌석 정보 업데이트
+            if (element.classList.contains('selected')) {
+                selectedSeatsInfo.push(seatInfo); // 좌석 정보 추가
+            } else {
+                const index = selectedSeatsInfo.indexOf(seatInfo);
+                if (index > -1) {
+                    selectedSeatsInfo.splice(index, 1); // 좌석 정보 제거
+                }
+            }
+
+            updateSelectedSeats();
+        }
+    }
+
+    function updateSelectedSeats() {
+        const selectedSeatInfoElement = document.getElementById('selected-seat-info');
+        selectedSeatInfoElement.innerHTML = ''; // 기존 리스트 초기화
+
+        selectedSeatsInfo.forEach(seat => {
+            const li = document.createElement('li');
+            li.textContent = seat;
+            selectedSeatInfoElement.appendChild(li);
+        });
+    }
+
+    function completeSelection() {
+        if (selectedSeatsInfo.length > 0) {
+            alert(selectedSeatsInfo.join(', ') + ' 좌석을 선택하셨습니다!');
+        } else {
+            alert('선택된 좌석이 없습니다.');
+        }
+    }
+</script>
+
+</body>
+</html>
